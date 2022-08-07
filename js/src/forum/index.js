@@ -16,6 +16,8 @@ app.initializers.add('3ddario/flarum-ext-tag-color-swiss-army-knife', () => {
     const textColor = this.currentTag().attribute('textColor');
     const bgColor = this.currentTag().attribute('color');
     const heroTitleElement = this.element.querySelector('.Hero-title');
+    const tagDescriptionElement = this.element.querySelector('.Hero-subtitle');
+
     const newDiscussionButton = this.element.querySelector('.IndexPage-newDiscussion');
 
     if (textColor.length > 0) {
@@ -23,6 +25,10 @@ app.initializers.add('3ddario/flarum-ext-tag-color-swiss-army-knife', () => {
       newDiscussionButton.classList.remove('Button--tagColored');
       newDiscussionButton.style.color = textColor;
       newDiscussionButton.style.backgroundColor = bgColor;
+
+      if (tagDescriptionElement) {
+        tagDescriptionElement.style.color = textColor;
+      }
     }
   });
 
