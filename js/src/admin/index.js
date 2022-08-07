@@ -18,11 +18,7 @@ app.initializers.add('3ddario/flarum-ext-tag-color-swiss-army-knife', () => {
     const colorInputFormVanilla = items.get('color');
 
     if (colorInputFormVanilla && colorInputFormVanilla.children) {
-      const newColorHelpText = m(
-        'div',
-        { class: 'helpText' },
-        app.translator.trans('flarum-ext-tag-color-swiss-army-knife.admin.stock_color.helptext')
-      );
+      const newColorHelpText = m('div', { class: 'helpText' }, app.translator.trans('3ddario-tag-color-swiss-army-knife.admin.stock_color.helptext'));
 
       colorInputFormVanilla.children.splice(1, 0, newColorHelpText);
     }
@@ -30,8 +26,8 @@ app.initializers.add('3ddario/flarum-ext-tag-color-swiss-army-knife', () => {
     items.add(
       'textColor',
       <div className="Form-group">
-        <label>{app.translator.trans('flarum-ext-tag-color-swiss-army-knife.admin.text_color.custom_label')} </label>
-        <div className="helpText">{app.translator.trans('flarum-ext-tag-color-swiss-army-knife.admin.text_color.custom_helptex')}</div>
+        <label>{app.translator.trans('3ddario-tag-color-swiss-army-knife.admin.text_color.custom_label')} </label>
+        <div className="helpText">{app.translator.trans('3ddario-tag-color-swiss-army-knife.admin.text_color.helptext')}</div>
         <ColorPreviewInput className="FormControl" placeholder="#aaaaaa" bidi={this.textColor} />
       </div>,
       15
