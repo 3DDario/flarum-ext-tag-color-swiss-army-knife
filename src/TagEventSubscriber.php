@@ -1,6 +1,6 @@
 <?php
 
-namespace X3ddario\\TagColorSwissArmyKnife;
+namespace X3ddario\TagColorSwissArmyKnife;
 
 use Flarum\Tags\Event\Creating;
 use Flarum\Tags\Event\Saving;
