@@ -195,6 +195,7 @@ app.initializers.add('3ddario/flarum-ext-tag-color-swiss-army-knife', () => {
     }
 
     const elems = this.element.querySelectorAll('.TagLabel');
+    let firstTagAttributes;
 
     for (let i = 0; i < elems.length; i++) {
       const elem = elems[i];
@@ -208,18 +209,58 @@ app.initializers.add('3ddario/flarum-ext-tag-color-swiss-army-knife', () => {
       }
 
       const tagAttributes = tagObject.data.attributes;
-      if (tagAttributes.textColor.length > 0) {
-        if (i === 0) {
-          this.element.style.removeProperty('--hero-bg');
-          this.element.style.backgroundColor = tagAttributes.textColor;
-          this.element.classList.remove('DiscussionHero--colored');
 
-          this.element.querySelector('.DiscussionHero-title').style.color = tagAttributes.color;
+      if (i === 0) {
+        if (tagAttributes.textColor.length === 0) {
+          // First tag doesn't have custom text color so the extension does nothing
+          break;
         }
+        if (tagAttributes.discussionHeroColorMode === 'flarum_vanilla') {
+          // Default styling applies
+          break;
+        }
+        firstTagAttributes = tagAttributes;
 
-        elem.classList.remove('colored');
-        elem.firstChild.style.color = tagAttributes.textColor;
-        elem.style.backgroundColor = tagAttributes.color;
+        this.element.style.removeProperty('--hero-bg');
+        this.element.classList.remove('DiscussionHero--colored');
+
+        switch (firstTagAttributes.discussionHeroColorMode) {
+          case 'primary_bg_tag_full_color':
+            const forumPrimaryColor = getComputedStyle(this.element).getPropertyValue('--primary-color');
+            const forumPSecondaryColor = getComputedStyle(this.element).getPropertyValue('--secondary-color');
+
+            this.element.style.backgroundColor = forumPrimaryColor;
+            this.element.querySelector('.DiscussionHero-title').style.color = forumPSecondaryColor;
+            break;
+          case 'tag_text_as_bg_tag_full_color':
+            this.element.style.backgroundColor = tagAttributes.color;
+            this.element.querySelector('.DiscussionHero-title').style.color = tagAttributes.textColor;
+            break;
+          case 'tag_bg_as_bg_tag_full_color':
+            this.element.style.backgroundColor = tagAttributes.textColor;
+            this.element.querySelector('.DiscussionHero-title').style.color = tagAttributes.color;
+            break;
+        }
+      }
+
+      if (tagAttributes.textColor.length > 0) {
+        switch (firstTagAttributes.discussionHeroColorMode) {
+          case 'primary_bg_tag_full_color':
+            elem.classList.remove('colored');
+            elem.firstChild.style.color = tagAttributes.textColor;
+            elem.style.backgroundColor = tagAttributes.color;
+            break;
+          case 'tag_text_as_bg_tag_full_color':
+            elem.classList.remove('colored');
+            elem.firstChild.style.color = tagAttributes.color;
+            elem.style.backgroundColor = tagAttributes.textColor;
+            break;
+          case 'tag_bg_as_bg_tag_full_color':
+            elem.classList.remove('colored');
+            elem.firstChild.style.color = tagAttributes.textColor;
+            elem.style.backgroundColor = tagAttributes.color;
+            break;
+        }
       }
     }
   });

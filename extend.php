@@ -19,6 +19,7 @@ return [
     (new Extend\ApiSerializer(TagSerializer::class))
         ->attributes(function (TagSerializer $serializer, Tag $tag, array $attributes) {
             $attributes['textColor'] = (string) $tag->text_color;
+            $attributes['discussionHeroColorMode'] = (string) $tag->discussion_hero_color_mode;
 
             return $attributes;
         })

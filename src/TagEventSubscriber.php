@@ -24,5 +24,11 @@ class TagEventSubscriber
 
             $event->tag->text_color = $textColor;
         }
+
+        if (Arr::has($data, ['attributes.discussionHeroColorMode'])) {
+            $discussionHeroColorMode = Arr::get($data, 'attributes.discussionHeroColorMode');
+
+            $event->tag->discussion_hero_color_mode = $discussionHeroColorMode;
+        }
     }
 }

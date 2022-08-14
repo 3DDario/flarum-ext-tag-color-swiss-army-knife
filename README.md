@@ -26,6 +26,8 @@ Enable the extension under the **Extensions** tab in the admin area.
 
 Right now the extension itself doesn’t need further configuration. When enabled, it adds an input form in the `EditTagModal` (**Tags** tab in the admin area > click on the pencil icon next to the tag you want to edit). If leaved empty, the default Flarum behavior applies.
 
+## Examples
+
 ## Links
 
 - [Packagist](https://packagist.org/packages/3ddario/flarum-ext-tag-color-swiss-army-knife)
