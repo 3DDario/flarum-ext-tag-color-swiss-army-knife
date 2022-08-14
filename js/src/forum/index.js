@@ -6,6 +6,7 @@ import TagsPage from 'flarum/tags/components/TagsPage';
 import DiscussionComposer from 'flarum/forum/components/DiscussionComposer';
 import DiscussionHero from 'flarum/forum/components/DiscussionHero';
 import TagDiscussionModal from 'flarum/tags/components/TagDiscussionModal';
+import EventPost from 'flarum/forum/components/EventPost';
 
 app.initializers.add('3ddario/flarum-ext-tag-color-swiss-army-knife', () => {
   extend(IndexPage.prototype, 'oncreate', function () {
@@ -263,5 +264,30 @@ app.initializers.add('3ddario/flarum-ext-tag-color-swiss-army-knife', () => {
         }
       }
     }
+  });
+
+  extend(EventPost.prototype, 'oncreate', function () {
+    if (!this.element || !this.attrs || !('tagsAdded' in this.attrs)) {
+      return;
+    }
+
+    this.element.querySelectorAll('a.TagLabel.colored').forEach((elem) => {
+      if (!elem.attributes || typeof elem.attributes.href !== 'object') {
+        return;
+      }
+      const tagSlug = elem.attributes.href.value.replace('/t/', '');
+      const tag = app.store.getBy('tags', 'slug', tagSlug);
+
+      if (!tag) {
+        return;
+      }
+
+      const tagAttributes = tag.data.attributes;
+      if (tag.data.attributes.textColor.length > 0) {
+        elem.classList.remove('colored');
+        elem.firstChild.style.color = tagAttributes.textColor;
+        elem.style.color = tagAttributes.color;
+      }
+    });
   });
 });

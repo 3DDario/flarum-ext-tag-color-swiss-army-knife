@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - New tag setting that allows customization of the DiscussionHero background and text color
+- Apply custom text color to TagLabels in EventPost
 
 ## [1.1.0] - 2022-08-07
 ### Added
